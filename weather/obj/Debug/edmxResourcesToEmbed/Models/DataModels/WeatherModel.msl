@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="weatherModelsDataModelsStoreContainer" CdmEntityContainer="WeatherEntities">
+    <EntitySetMapping Name="Forecasts">
+      <EntityTypeMapping TypeName="weather.Models.DataModels.Forecast">
+        <MappingFragment StoreEntitySet="Forecast">
+          <ScalarProperty Name="ForecastId" ColumnName="ForecastId" />
+          <ScalarProperty Name="GeoinfoId" ColumnName="GeoinfoId" />
+          <ScalarProperty Name="Day" ColumnName="Day" />
+          <ScalarProperty Name="Temperature" ColumnName="Temperature" />
+          <ScalarProperty Name="Symbol" ColumnName="Symbol" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="weather.Models.DataModels.Forecast">
+        <ModificationFunctionMapping>
+          <InsertFunction FunctionName="weather.Models.DataModels.Store.uspInsertForecast">
+            <ScalarProperty Name="Symbol" ParameterName="Symbol" />
+            <ScalarProperty Name="Temperature" ParameterName="Temperature" />
+            <ScalarProperty Name="Day" ParameterName="Day" />
+            <ScalarProperty Name="GeoinfoId" ParameterName="GeoinfoId" />
+            <ResultBinding Name="ForecastId" ColumnName="NewForecastId" />
+          </InsertFunction>
+          <UpdateFunction FunctionName="weather.Models.DataModels.Store.uspUpdateForecast">
+            <ScalarProperty Name="GeoinfoId" ParameterName="GeoinfoId" Version="Current" />
+            <ScalarProperty Name="ForecastId" ParameterName="ForecastId" Version="Current" />
+          </UpdateFunction>
+          <DeleteFunction FunctionName="weather.Models.DataModels.Store.uspDeleteForecast">
+            <ScalarProperty Name="ForecastId" ParameterName="ForecastId" />
+          </DeleteFunction>
+        </ModificationFunctionMapping>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Geoinfoes">
+      <EntityTypeMapping TypeName="weather.Models.DataModels.Geoinfo">
+        <MappingFragment StoreEntitySet="Geoinfo">
+          <ScalarProperty Name="GeoinfoId" ColumnName="GeoinfoId" />
+          <ScalarProperty Name="NextUpdate" ColumnName="NextUpdate" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="Region" ColumnName="Region" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="City" ColumnName="City" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="weather.Models.DataModels.Geoinfo">
+        <ModificationFunctionMapping>
+          <InsertFunction FunctionName="weather.Models.DataModels.Store.uspInsertGeoinfo">
+            <ScalarProperty Name="City" ParameterName="City" />
+            <ScalarProperty Name="Longitude" ParameterName="Longitude" />
+            <ScalarProperty Name="Latitude" ParameterName="Latitude" />
+            <ScalarProperty Name="Region" ParameterName="Region" />
+            <ScalarProperty Name="Country" ParameterName="Country" />
+            <ScalarProperty Name="NextUpdate" ParameterName="NextUpdate" />
+            <ResultBinding Name="GeoinfoId" ColumnName="NewGeoinfoId" />
+          </InsertFunction>
+          <UpdateFunction FunctionName="weather.Models.DataModels.Store.uspUpdateGeoinfo">
+            <ScalarProperty Name="City" ParameterName="City" Version="Current" />
+            <ScalarProperty Name="Longitude" ParameterName="Longitude" Version="Current" />
+            <ScalarProperty Name="Latitude" ParameterName="Latitude" Version="Current" />
+            <ScalarProperty Name="Region" ParameterName="Region" Version="Current" />
+            <ScalarProperty Name="Country" ParameterName="Country" Version="Current" />
+            <ScalarProperty Name="NextUpdate" ParameterName="NextUpdate" Version="Current" />
+            <ScalarProperty Name="GeoinfoId" ParameterName="GeoinfoId" Version="Current" />
+          </UpdateFunction>
+        </ModificationFunctionMapping>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

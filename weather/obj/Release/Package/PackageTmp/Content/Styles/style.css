@@ -1,0 +1,61 @@
+﻿body {
+    background:#efefef;
+}
+
+.container {
+    margin:0 auto;
+    width:960px;
+    padding:20px;
+    background:#fff;
+}
+
+.nav {
+}
+
+.nav ul {
+    list-style:none;
+    padding:0;
+    margin:0;
+}
+
+.nav ul li {
+    padding:0;
+    margin:0;
+}
+
+.nav ul li a {
+    color:#161616;
+    text-decoration:none;
+    padding:10px;
+}
+
+.nav ul li a:hover {
+    color:#161616;
+    text-decoration:none;
+    background:#ccc;
+}
+
+.top {
+    overflow:hidden;
+}
+
+.top-left {
+    float:left;
+    width:200px;
+}
+
+.top-right {
+    float:left;
+    margin-top:30px;
+}
+
+.forecasts {
+    overflow:hidden;
+    margin-bottom:50px;
+}
+
+.forecast {
+    float:left;
+    width:80px;
+    text-align:center;
+}

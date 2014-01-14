@@ -1,0 +1,56 @@
+﻿@model List<weather.ViewModels.WeatherViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Väderprognos</h2>
+
+<div class="forecasts">
+@foreach (var item in Model)
+{
+    <div class="forecast">
+        <strong>@Html.DisplayFor(modelItem => item.DayInText)</strong>
+        <img src="@Url.Content("~/Content/Images/" + item.Symbol + ".jpg")" />
+        @Html.DisplayFor(modelItem => item.Temperature)
+    </div>
+}
+</div>
+
+<div id="map-canvas" style="height:500px; width:500px;"></div>
+
+@section Scripts {
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBf4M9r7mt3Gu6xBtL8b-WJJGIp6pjK1Ss&sensor=false"></script>
+    <script type="text/javascript">
+        function initialize() {
+            var myLatlng = new google.maps.LatLng('@ViewBag.Latitude', '@ViewBag.Longitude');
+	        var mapOptions = {
+		        zoom: 3,
+		        center: myLatlng,
+		        mapTypeId: google.maps.MapTypeId.ROADMAP,
+		        minZoom: 6,
+		        maxZoom: 17,
+		        zoomControl:true,
+		        zoomControlOptions: {
+			        style:google.maps.ZoomControlStyle.DEFAULT
+		        },
+		        panControl:false,
+		        mapTypeControl:false,
+		        scaleControl:false,
+		        streetViewControl:false,
+		        overviewMapControl:false,
+		        rotateControl:false
+	        };
+
+	        var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+	        var marker = new google.maps.Marker({
+                position: myLatlng,
+                map: map
+	        });
+
+        }
+
+	    google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+}

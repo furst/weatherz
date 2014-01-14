@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="weather.Models.DataModels" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="WeatherEntities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="Forecasts" EntityType="weather.Models.DataModels.Forecast" />
+    <EntitySet Name="Geoinfoes" EntityType="weather.Models.DataModels.Geoinfo" />
+    <AssociationSet Name="FK_Forecast_Geoinfo" Association="weather.Models.DataModels.FK_Forecast_Geoinfo">
+      <End Role="Geoinfo" EntitySet="Geoinfoes" />
+      <End Role="Forecast" EntitySet="Forecasts" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Forecast">
+    <Key>
+      <PropertyRef Name="ForecastId" />
+    </Key>
+    <Property Name="ForecastId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="GeoinfoId" Type="Int32" Nullable="false" />
+    <Property Name="Day" Type="DateTime" Nullable="false" Precision="7" />
+    <Property Name="Temperature" Type="Int32" Nullable="false" />
+    <Property Name="Symbol" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Geoinfo" Relationship="weather.Models.DataModels.FK_Forecast_Geoinfo" FromRole="Forecast" ToRole="Geoinfo" />
+  </EntityType>
+  <EntityType Name="Geoinfo">
+    <Key>
+      <PropertyRef Name="GeoinfoId" />
+    </Key>
+    <Property Name="GeoinfoId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="NextUpdate" Type="DateTime" Precision="7" />
+    <Property Name="Country" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="Region" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="Latitude" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Longitude" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="City" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="Forecasts" Relationship="weather.Models.DataModels.FK_Forecast_Geoinfo" FromRole="Geoinfo" ToRole="Forecast" />
+  </EntityType>
+  <Association Name="FK_Forecast_Geoinfo">
+    <End Role="Geoinfo" Type="weather.Models.DataModels.Geoinfo" Multiplicity="1" />
+    <End Role="Forecast" Type="weather.Models.DataModels.Forecast" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Geoinfo">
+        <PropertyRef Name="GeoinfoId" />
+      </Principal>
+      <Dependent Role="Forecast">
+        <PropertyRef Name="GeoinfoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

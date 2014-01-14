@@ -1,0 +1,34 @@
+﻿@model weather.ViewModels.GeoinfoViewModel
+
+@{
+    ViewBag.Title = "Sök väderprognos";
+}
+
+<h2>Sök Väderprognos</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+     @Html.ValidationSummary(true);
+
+        <div class="editor-field">
+            @Html.LabelFor(model => model.City)
+            @Html.TextBoxFor(model => model.City,  new { maxlength="50" })
+            <input type="submit" value="Sök" />
+        </div> 
+        <p>@Html.ValidationMessageFor(model => model.City)</p>
+}
+
+@if (Model != null && Model.HasGeoinfos)
+{
+<div id="geoinfos">
+    <h3>Du sökte på: @Model.City</h3>
+    @foreach (var item in Model.Geoinfos)
+    {
+		 <p><strong>@item.City</strong>, @item.Region, @item.Country | @Html.ActionLink("Visa", "Forecast", new {country=item.Country, region=item.Region, latitude=item.Latitude, longitude=item.Longitude, city=item.City}) </p>
+    }
+</div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="weather.Models.DataModels.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="weatherModelsDataModelsStoreContainer">
+    <EntitySet Name="Forecast" EntityType="weather.Models.DataModels.Store.Forecast" store:Type="Tables" Schema="appSchema" />
+    <EntitySet Name="Geoinfo" EntityType="weather.Models.DataModels.Store.Geoinfo" store:Type="Tables" Schema="appSchema" />
+    <AssociationSet Name="FK_Forecast_Geoinfo" Association="weather.Models.DataModels.Store.FK_Forecast_Geoinfo">
+      <End Role="Geoinfo" EntitySet="Geoinfo" />
+      <End Role="Forecast" EntitySet="Forecast" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Forecast">
+    <Key>
+      <PropertyRef Name="ForecastId" />
+    </Key>
+    <Property Name="ForecastId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GeoinfoId" Type="int" Nullable="false" />
+    <Property Name="Day" Type="datetime2" Nullable="false" />
+    <Property Name="Temperature" Type="int" Nullable="false" />
+    <Property Name="Symbol" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Geoinfo">
+    <Key>
+      <PropertyRef Name="GeoinfoId" />
+    </Key>
+    <Property Name="GeoinfoId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="NextUpdate" Type="datetime2" />
+    <Property Name="Country" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="Region" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="Latitude" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="Longitude" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="City" Type="varchar" Nullable="false" MaxLength="100" />
+  </EntityType>
+  <Association Name="FK_Forecast_Geoinfo">
+    <End Role="Geoinfo" Type="weather.Models.DataModels.Store.Geoinfo" Multiplicity="1" />
+    <End Role="Forecast" Type="weather.Models.DataModels.Store.Forecast" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Geoinfo">
+        <PropertyRef Name="GeoinfoId" />
+      </Principal>
+      <Dependent Role="Forecast">
+        <PropertyRef Name="GeoinfoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="uspDeleteForecast" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="appSchema">
+    <Parameter Name="ForecastId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="uspInsertForecast" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="appSchema">
+    <Parameter Name="GeoinfoId" Type="int" Mode="In" />
+    <Parameter Name="Day" Type="datetime2" Mode="In" />
+    <Parameter Name="Temperature" Type="int" Mode="In" />
+    <Parameter Name="Symbol" Type="int" Mode="In" />
+  </Function>
+  <Function Name="uspInsertGeoinfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="appSchema">
+    <Parameter Name="NextUpdate" Type="datetime2" Mode="In" />
+    <Parameter Name="Country" Type="varchar" Mode="In" />
+    <Parameter Name="Region" Type="varchar" Mode="In" />
+    <Parameter Name="Latitude" Type="varchar" Mode="In" />
+    <Parameter Name="Longitude" Type="varchar" Mode="In" />
+    <Parameter Name="City" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="uspUpdateForecast" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="appSchema">
+    <Parameter Name="ForecastId" Type="int" Mode="In" />
+    <Parameter Name="GeoinfoId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="uspUpdateGeoinfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="appSchema">
+    <Parameter Name="GeoinfoId" Type="int" Mode="In" />
+    <Parameter Name="NextUpdate" Type="datetime2" Mode="In" />
+    <Parameter Name="Country" Type="varchar" Mode="In" />
+    <Parameter Name="Region" Type="varchar" Mode="In" />
+    <Parameter Name="Latitude" Type="varchar" Mode="In" />
+    <Parameter Name="Longitude" Type="varchar" Mode="In" />
+    <Parameter Name="City" Type="varchar" Mode="In" />
+  </Function>
+</Schema>
